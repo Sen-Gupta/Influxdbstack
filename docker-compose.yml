@@ -37,7 +37,7 @@ services:
 
             << : *influxdb-shared-vars
         networks:
-            - metrics
+            - stocks
         # restart: always
         labels:
             - "traefik.http.routers.influxdb-ssl.entryPoints=influxdb-port"
@@ -78,7 +78,7 @@ services:
             # Variables for setting up the InfluxDB data source
             << : *influxdb-shared-vars
         networks:
-            - metrics
+            - stocks
         # restart: always
         depends_on:
             - $INFLUXDB_CONTAINER
@@ -89,7 +89,6 @@ services:
             - "traefik.http.routers.grafana.middlewares=grafana-redirect"
             - "traefik.http.middlewares.grafana-redirect.redirectScheme.scheme=https"
             - "traefik.http.middlewares.grafana-redirect.redirectScheme.permanent=true"
-
             - "traefik.http.routers.grafana-ssl.entryPoints=port443"
             - "traefik.http.routers.grafana-ssl.rule=host(`$METRICS_DOMAIN`)"
             - "traefik.http.routers.grafana-ssl.tls=true"
@@ -110,7 +109,7 @@ services:
               target: /var/run/docker.sock
               read_only: true
         networks:
-            - metrics
+            - stocks
         # restart: always
         ports:
             - "80:80"
@@ -129,15 +128,15 @@ services:
             - "--certificatesResolvers.lets-encrypt-ssl.acme.email=${LETS_ENCRYPT_EMAIL}"
 
 networks:
-    metrics:
+    stocks:
         driver: bridge
 
 volumes:
     influxdb-data:
-        external: false
+        external: true
 
     grafana-data:
-        external: false
+        external: true
 
     traefik-data:
-        external: false
+        external: true

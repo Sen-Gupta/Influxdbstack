@@ -62,7 +62,7 @@ services:
             - stocks
         restart: unless-stopped
         depends_on:
-            - $influxdb
+            - influxdb
 networks:
     stocks:
         driver: bridge

@@ -24,7 +24,7 @@ services:
             - ./.env
         environment:
             INFLUXDB_META_DIR: /var/lib/influxdb/meta
-
+            INFLUXDB_INIT_MODE: setup  
             INFLUXDB_DATA_DIR: /var/lib/influxdb/data
             INFLUXDB_DATA_WAL_DIR: /var/lib/influxdb/data
             INFLUXDB_DATA_MAX_SERIES_PER_DATABASE: 0
